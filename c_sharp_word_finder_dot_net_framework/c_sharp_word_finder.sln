@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "c_sharp_word_finder", "c_sharp_word_finder\c_sharp_word_finder.csproj", "{9603F5EB-87C3-4823-8590-08411377612E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9603F5EB-87C3-4823-8590-08411377612E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9603F5EB-87C3-4823-8590-08411377612E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9603F5EB-87C3-4823-8590-08411377612E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9603F5EB-87C3-4823-8590-08411377612E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2ED41F09-627B-4B94-9027-D2B7CDC5201D}
+	EndGlobalSection
+EndGlobal
