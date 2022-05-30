@@ -78,6 +78,56 @@ namespace c_sharp_word_finder
             return matchingWords.ToList();
         }
 
+        public List<string> SearchMultiThreadedEachList(List<string> wordList, string pattern)
+        {
+            int chunckSize = wordList.Count / maxThreads;
+            List<Thread> threads = new List<Thread>();
+            List<string> matchingWords = new List<string>();
+            ConcurrentBag<List<string>> results = new ConcurrentBag<List<string>>();
+
+            ParameterizedThreadStart parameterizedThreadStart = new ParameterizedThreadStart(x =>
+            {
+                int index = Convert.ToInt32(x);
+                if (index == -1) return;
+                List<string> result = new List<string>();
+
+                for (int i = index * chunckSize; i < (index + 1) * chunckSize; i++)
+                {
+                    if (wordList[i].StartsWith(pattern))
+                    {
+                        result.Add(wordList[i]);
+                    }
+                }
+
+                results.Add(result);
+            });
+
+
+            for (int i = 0; i < maxThreads; i++)
+            {
+                threads.Add(new Thread(parameterizedThreadStart));
+                threads[i].Start(numberList[i]);
+            }
+
+            for (int i = chunckSize * maxThreads; i < wordList.Count; i++)
+            {
+                if (wordList[i].StartsWith(pattern))
+                {
+                    matchingWords.Add(wordList[i]);
+                }
+            }
+
+            for (int i = 0; i < threads.Count; i++)
+            {
+                //if (!thread.Join(3000))
+                //    throw new TimeoutException();
+                threads[i].Join();
+                matchingWords.AddRange(results.ElementAt(i));
+            }
+
+            return matchingWords.ToList();
+        }
+
         public List<string> SearchThreadPool(List<string> wordList, string pattern)
         {
             int chunckSize = wordList.Count / maxThreads;
@@ -118,21 +168,24 @@ namespace c_sharp_word_finder
         public List<string> SearchParallelTasks(List<string> wordList, string pattern)
         {
             int chunckSize = wordList.Count / maxThreads;
-            Task[] tasks = new Task[maxThreads];
-            ConcurrentBag<string> matchingWords = new ConcurrentBag<string>();
+            Task<List<string>>[] tasks = new Task<List<string>>[maxThreads];
+            List<string> matchingWords = new List<string>();
 
             for (int i = 0; i < maxThreads; i++)
             {
-                tasks[i] = Task.Factory.StartNew(x =>
+                tasks[i] = Task<List<string>>.Factory.StartNew(x =>
                 {
                     int index = Convert.ToInt32(x);
+                    List<string> result = new List<string>();
+
                     for (int j = index * chunckSize; j < (index + 1) * chunckSize; j++)
                     {
                         if (wordList[j].StartsWith(pattern))
                         {
-                            matchingWords.Add(wordList[j]);
+                            result.Add(wordList[j]);
                         }
                     }
+                    return result;
                 }, numberList[i]);
             }
 
@@ -145,6 +198,11 @@ namespace c_sharp_word_finder
             }
 
             Task.WaitAll(tasks.ToArray());
+
+            foreach (Task<List<string>> task in tasks)
+            {
+                matchingWords.AddRange(task.Result);
+            }
 
             return matchingWords.ToList();
         }

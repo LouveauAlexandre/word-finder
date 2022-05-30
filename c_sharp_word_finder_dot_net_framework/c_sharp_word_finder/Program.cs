@@ -38,7 +38,7 @@ namespace c_sharp_word_finder
                 searchSingleThreadedSearchTime = stopwatch.ElapsedMilliseconds;
 
                 searchResult.Clear();
-                Thread.Sleep(100);
+
                 // Multi Threaded
                 int searchMultiThreadedResultCount;
                 long searchMultiThreadedSearchTime;
@@ -51,7 +51,6 @@ namespace c_sharp_word_finder
                 searchMultiThreadedSearchTime = stopwatch.ElapsedMilliseconds;
 
                 searchResult.Clear();
-                Thread.Sleep(100);
 
                 // ThreadPool
                 int searchThreadPoolResultCount;
@@ -66,7 +65,6 @@ namespace c_sharp_word_finder
                 searchThreadPoolSearchTime = stopwatch.ElapsedMilliseconds;
 
                 searchResult.Clear();
-                Thread.Sleep(100);
 
                 // Parallel Tasks
                 int searchParallelTasksResultCount;
@@ -80,7 +78,7 @@ namespace c_sharp_word_finder
                 searchParallelTaskSearchTime = stopwatch.ElapsedMilliseconds;
 
                 searchResult.Clear();
-                Thread.Sleep(100);
+
                 // Parallel.For
                 int searchTaskParallelForResultCount;
                 long searchTaskParallelForSearchTime;
@@ -94,7 +92,7 @@ namespace c_sharp_word_finder
                 searchTaskParallelForSearchTime = stopwatch.ElapsedMilliseconds;
 
                 searchResult.Clear();
-                Thread.Sleep(100);
+
                 // Parallel.ForEach
                 int searchTaskParallelForEachResultCount;
                 long searchTaskParallelForEachSearchTime;

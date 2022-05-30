@@ -27,24 +27,20 @@ fn is_correct_word(word : &str, pattern : &str) -> bool {
     }
 }
 
-fn process_search_single_threaded<'a>(word_list: &'a Vec<String>, pattern: &'a str) -> (Vec<&'a String>, std::time::Duration) {
-    let now = Instant::now();
+fn process_search_single_threaded<'a>(word_list: &'a Vec<String>, pattern: &'a str) -> Vec<&'a String> {
     let result: Vec<&String> = word_list.into_iter().filter(|word| is_correct_word(word, pattern)).collect();
-    let elapsed = now.elapsed();
-    (result, elapsed)
+    result
 }
 
-fn process_search_multi_threaded<'a>(word_list: &'a Vec<String>, pattern: &'a str) -> (Vec<&'a String>, std::time::Duration) {
-    let now = Instant::now();
+fn process_search_multi_threaded<'a>(word_list: &'a Vec<String>, pattern: &'a str) -> Vec<&'a String> {
     let result: Vec<&String> = word_list.into_par_iter().filter(|word| is_correct_word(word, pattern)).collect();
-    let elapsed = now.elapsed();
-    (result, elapsed)
+    result
 }
 
 fn main() {
     let word_list = generate_word_list();
     let mut input_pattern = String::new();
-    
+
     while !match input_pattern.trim() {
         ":q" => true,
         _ => false,
@@ -59,10 +55,14 @@ fn main() {
             _ => false,
         } {
             input_pattern = input_pattern.trim().to_uppercase();
-            let (single_threaded_result, single_threaded_search_time)  = process_search_single_threaded(&word_list, &input_pattern);
-            
-            let (multi_threaded_result, multi_threaded_search_time)  = process_search_multi_threaded(&word_list, &input_pattern);
-            
+            let mut now = Instant::now();
+            let single_threaded_result = process_search_single_threaded(&word_list, &input_pattern);
+            let single_threaded_search_time = now.elapsed();
+
+            now = Instant::now();
+            let multi_threaded_result  = process_search_multi_threaded(&word_list, &input_pattern);
+            let multi_threaded_search_time = now.elapsed();
+
             println!("\nMatching words:\n{:?}", multi_threaded_result);
             println!("\nSingle Threaded Search:");
             println!("Result count: {}", single_threaded_result.len());
