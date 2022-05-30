@@ -14,8 +14,18 @@ namespace c_sharp_word_finder
 
         public WordSearch()
         {
-            maxThreads = Environment.ProcessorCount - 1;
+            maxThreads = Environment.ProcessorCount;
             for (int i = 0; i < maxThreads; i++) numberList.Add(i);
+        }
+
+        private bool StartsWith(string word, string pattern)
+        {
+            if (pattern.Length > word.Length) return false;
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                if (word[i] != pattern[i]) return false;
+            }
+            return true;
         }
 
         public List<string> SearchSingleThreaded(List<string> wordList, string pattern)
@@ -24,7 +34,7 @@ namespace c_sharp_word_finder
             
             foreach (string word in wordList)
             {
-                if (word.StartsWith(pattern))
+                if (StartsWith(word, pattern))
                 {
                     matchingWords.Add(word);
                 }
@@ -46,7 +56,7 @@ namespace c_sharp_word_finder
 
                 for (int i = index * chunckSize; i < (index + 1) * chunckSize; i++)
                 {
-                    if (wordList[i].StartsWith(pattern))
+                    if (StartsWith(wordList[i], pattern))
                     {
                         matchingWords.Add(wordList[i]);
                     }
@@ -62,7 +72,8 @@ namespace c_sharp_word_finder
 
             for (int i = chunckSize * maxThreads; i < wordList.Count; i++)
             {
-                if (wordList[i].StartsWith(pattern))
+                //if (wordList[i].StartsWith(pattern))
+                if (StartsWith(wordList[i], pattern))
                 {
                     matchingWords.Add(wordList[i]);
                 }
@@ -93,7 +104,7 @@ namespace c_sharp_word_finder
 
                 for (int i = index * chunckSize; i < (index + 1) * chunckSize; i++)
                 {
-                    if (wordList[i].StartsWith(pattern))
+                    if (StartsWith(wordList[i], pattern))
                     {
                         result.Add(wordList[i]);
                     }
@@ -111,7 +122,7 @@ namespace c_sharp_word_finder
 
             for (int i = chunckSize * maxThreads; i < wordList.Count; i++)
             {
-                if (wordList[i].StartsWith(pattern))
+                if (StartsWith(wordList[i], pattern))
                 {
                     matchingWords.Add(wordList[i]);
                 }
@@ -142,7 +153,7 @@ namespace c_sharp_word_finder
                         int index = Convert.ToInt32(x);
                         for (int j = index * chunckSize; j < (index + 1) * chunckSize; j++)
                         {
-                            if (wordList[j].StartsWith(pattern))
+                            if (StartsWith(wordList[j], pattern))
                             {
                                 matchingWords.Add(wordList[j]);
                             }
@@ -153,7 +164,7 @@ namespace c_sharp_word_finder
 
                 for (int i = chunckSize * maxThreads; i < wordList.Count; i++)
                 {
-                    if (wordList[i].StartsWith(pattern))
+                    if (StartsWith(wordList[i], pattern))
                     {
                         matchingWords.Add(wordList[i]);
                     }
@@ -180,7 +191,7 @@ namespace c_sharp_word_finder
 
                     for (int j = index * chunckSize; j < (index + 1) * chunckSize; j++)
                     {
-                        if (wordList[j].StartsWith(pattern))
+                        if (StartsWith(wordList[j], pattern))
                         {
                             result.Add(wordList[j]);
                         }
@@ -191,7 +202,7 @@ namespace c_sharp_word_finder
 
             for (int i = chunckSize * maxThreads; i < wordList.Count; i++)
             {
-                if (wordList[i].StartsWith(pattern))
+                if (StartsWith(wordList[i], pattern))
                 {
                     matchingWords.Add(wordList[i]);
                 }
@@ -213,7 +224,8 @@ namespace c_sharp_word_finder
 
             Parallel.For(0, wordList.Count, index =>
             {
-                if (wordList[index].StartsWith(pattern))
+                if (StartsWith(wordList[index], pattern))
+
                 {
                     matchingWords.Add(wordList[index]);
                 }
@@ -228,7 +240,7 @@ namespace c_sharp_word_finder
 
             Parallel.ForEach(wordList, word =>
             {
-                if (word.StartsWith(pattern))
+                if (StartsWith(word, pattern))
                 {
                     matchingWords.Add(word);
                 }
