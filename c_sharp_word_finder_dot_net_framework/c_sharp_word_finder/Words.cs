@@ -48,7 +48,7 @@ namespace c_sharp_word_finder
                     }
                 }
             }
-            //WordList.Shuffle();
+            WordList.Shuffle();
         }
     }
 }
