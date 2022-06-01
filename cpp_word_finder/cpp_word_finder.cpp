@@ -15,6 +15,7 @@ using namespace std;
 mutex matchingWordsMutex;
 unsigned int maxThreads;
 vector<int> numberVector;
+
 vector<string> generateWordList()
 {
     vector<string> wordList;
@@ -95,6 +96,7 @@ vector<string> processSearchMultiThreaded(const vector<string>& wordList, const 
 vector<string> processSearchOpenMP(const vector<string>& wordList, const string& pattern)
 {
     vector<string> matchingWords;
+
 #pragma omp parallel for num_threads(maxThreads)
     for (int i = 0; i < wordList.size(); i ++)
     {
@@ -131,7 +133,7 @@ int main()
         searchResult = processSearchSingleThreaded(wordList, inputPattern);
         auto end = chrono::high_resolution_clock::now();
         int searchSingleThreadedResultCount = searchResult.size();
-        double searchSingleThreadedSearchTime = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+        double searchSingleThreadedSearchTime = chrono::duration_cast<chrono::microseconds>(end - start).count() / 1000.0;
 
 
         // Multi threaded
@@ -139,14 +141,14 @@ int main()
         searchResult = processSearchMultiThreaded(wordList, inputPattern);
         end = chrono::high_resolution_clock::now();
         int searchMultiThreadedResultCount = searchResult.size();
-        double searchMultiThreadedSearchTime = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+        double searchMultiThreadedSearchTime = chrono::duration_cast<chrono::microseconds>(end - start).count() / 1000.0;
 
         // OpenMP
         start = chrono::high_resolution_clock::now();
         searchResult = processSearchMultiThreaded(wordList, inputPattern);
         end = chrono::high_resolution_clock::now();
         int searchOpenMPResultCount = searchResult.size();
-        double searchOpenMPSearchTime = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+        double searchOpenMPSearchTime = chrono::duration_cast<chrono::microseconds>(end - start).count() / 1000.0;
 
         cout << "\nMatching words:\n[";
         if (!searchResult.empty())
@@ -160,17 +162,17 @@ int main()
             cout << "No match";
         cout << "]" << endl;
 
-        cout << "\n Single threaded search result:" << endl;
+        cout << "\nSingle threaded search result:" << endl;
         cout << "Result count: " << searchSingleThreadedResultCount << endl;
-        cout << "search time: " << searchSingleThreadedSearchTime << endl;
+        cout << "search time (in ms): " << searchSingleThreadedSearchTime << endl;
 
-        cout << "\n Multi threaded search result:" << endl;
+        cout << "\nMulti threaded search result:" << endl;
         cout << "Result count: " << searchMultiThreadedResultCount << endl;
-        cout << "search time: " << searchMultiThreadedSearchTime << endl << endl;
+        cout << "search time (in ms): " << searchMultiThreadedSearchTime << endl << endl;
 
-        cout << "\n OpenMP search result:" << endl;
+        cout << "\nOpenMP search result:" << endl;
         cout << "Result count: " << searchOpenMPResultCount << endl;
-        cout << "search time: " << searchOpenMPSearchTime << endl << endl;
+        cout << "search time (in ms): " << searchOpenMPSearchTime << endl << endl;
 
     } while (inputPattern.compare(":q") != 0);
 }

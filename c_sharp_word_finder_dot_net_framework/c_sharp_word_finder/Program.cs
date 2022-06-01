@@ -12,7 +12,7 @@ namespace c_sharp_word_finder
         {
             Stopwatch stopwatch = new Stopwatch();
 
-            Words words = new Words();
+            List<string> wordList = Words.GenerateWordList();
             WordSearch wordSearch = new WordSearch();
             List<string> searchResult;
 
@@ -28,82 +28,82 @@ namespace c_sharp_word_finder
 
                 // Single Threaded
                 int searchSingleThreadedResultCount;
-                long searchSingleThreadedSearchTime;
+                double searchSingleThreadedSearchTime;
 
                 stopwatch.Start();
-                searchResult = wordSearch.SearchSingleThreaded(words.WordList, inputPattern.ToUpper());
+                searchResult = wordSearch.SearchSingleThreaded(wordList, inputPattern.ToUpper());
                 stopwatch.Stop();
 
                 searchSingleThreadedResultCount = searchResult.Count;
-                searchSingleThreadedSearchTime = stopwatch.ElapsedMilliseconds;
+                searchSingleThreadedSearchTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 searchResult.Clear();
 
                 // Multi Threaded
                 int searchMultiThreadedResultCount;
-                long searchMultiThreadedSearchTime;
+                double searchMultiThreadedSearchTime;
 
                 stopwatch.Start();
-                searchResult = wordSearch.SearchMultiThreaded(words.WordList, inputPattern.ToUpper());
+                searchResult = wordSearch.SearchMultiThreaded(wordList, inputPattern.ToUpper());
                 stopwatch.Stop();
 
                 searchMultiThreadedResultCount = searchResult.Count;
-                searchMultiThreadedSearchTime = stopwatch.ElapsedMilliseconds;
+                searchMultiThreadedSearchTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 searchResult.Clear();
 
                 // ThreadPool
                 int searchThreadPoolResultCount;
-                long searchThreadPoolSearchTime;
+                double searchThreadPoolSearchTime;
 
                 stopwatch.Reset();
                 stopwatch.Start();
-                searchResult = wordSearch.SearchThreadPool(words.WordList, inputPattern.ToUpper());
+                searchResult = wordSearch.SearchThreadPool(wordList, inputPattern.ToUpper());
                 stopwatch.Stop();
 
                 searchThreadPoolResultCount = searchResult.Count;
-                searchThreadPoolSearchTime = stopwatch.ElapsedMilliseconds;
+                searchThreadPoolSearchTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 searchResult.Clear();
 
                 // Parallel Tasks
                 int searchParallelTasksResultCount;
-                long searchParallelTaskSearchTime;
+                double searchParallelTaskSearchTime;
 
                 stopwatch.Start();
-                searchResult = wordSearch.SearchParallelTasks(words.WordList, inputPattern.ToUpper());
+                searchResult = wordSearch.SearchParallelTasks(wordList, inputPattern.ToUpper());
                 stopwatch.Stop();
 
                 searchParallelTasksResultCount = searchResult.Count;
-                searchParallelTaskSearchTime = stopwatch.ElapsedMilliseconds;
+                searchParallelTaskSearchTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 searchResult.Clear();
 
                 // Parallel.For
                 int searchTaskParallelForResultCount;
-                long searchTaskParallelForSearchTime;
+                double searchTaskParallelForSearchTime;
 
                 stopwatch.Reset();
                 stopwatch.Start();
-                searchResult = wordSearch.SearchTaskParallelFor(words.WordList, inputPattern.ToUpper());
+                searchResult = wordSearch.SearchTaskParallelFor(wordList, inputPattern.ToUpper());
                 stopwatch.Stop();
 
                 searchTaskParallelForResultCount = searchResult.Count;
-                searchTaskParallelForSearchTime = stopwatch.ElapsedMilliseconds;
+                searchTaskParallelForSearchTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 searchResult.Clear();
 
                 // Parallel.ForEach
                 int searchTaskParallelForEachResultCount;
-                long searchTaskParallelForEachSearchTime;
+                double searchTaskParallelForEachSearchTime;
 
                 stopwatch.Reset();
                 stopwatch.Start();
-                searchResult = wordSearch.SearchTaskParallelForEach(words.WordList, inputPattern.ToUpper());
+                searchResult = wordSearch.SearchTaskParallelForEach(wordList, inputPattern.ToUpper());
                 stopwatch.Stop();
 
                 searchTaskParallelForEachResultCount = searchResult.Count;
-                searchTaskParallelForEachSearchTime = stopwatch.ElapsedMilliseconds;
+                searchTaskParallelForEachSearchTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 //Print result matching words
                 Console.WriteLine("\nMatching words:");
@@ -121,32 +121,32 @@ namespace c_sharp_word_finder
                 // Print Single Threaded Search Result
                 Console.WriteLine("\nSingle threaded search Results:");
                 Console.WriteLine($"\tResult count: {searchSingleThreadedResultCount}");
-                Console.WriteLine($"\tSearch time: {searchSingleThreadedSearchTime}");
+                Console.WriteLine($"\tSearch time (in ms): {searchSingleThreadedSearchTime}");
                 
                 // Print Multi Threaded Search Result
                 Console.WriteLine("\nMulti threaded search Results:");
                 Console.WriteLine($"\tResult count: {searchMultiThreadedResultCount}");
-                Console.WriteLine($"\tSearch time: {searchMultiThreadedSearchTime}");
+                Console.WriteLine($"\tSearch time (in ms): {searchMultiThreadedSearchTime}");
 
                 // Print Thread Pool Search Result
                 Console.WriteLine("\nThread pool search Results:");
                 Console.WriteLine($"\tResult count: {searchThreadPoolResultCount}");
-                Console.WriteLine($"\tSearch time: {searchThreadPoolSearchTime}");
+                Console.WriteLine($"\tSearch time (in ms): {searchThreadPoolSearchTime}");
 
                 // PrintParallel Tasks Search Result
                 Console.WriteLine("\nParallel tasks search Results:");
                 Console.WriteLine($"\tResult count: {searchParallelTasksResultCount}");
-                Console.WriteLine($"\tSearch time: {searchParallelTaskSearchTime}");
+                Console.WriteLine($"\tSearch time (in ms): {searchParallelTaskSearchTime}");
 
                 // Print Task Parallel For Result
                 Console.WriteLine("\nTask parallel for search Results:");
                 Console.WriteLine($"\tResult count: {searchTaskParallelForResultCount}");
-                Console.WriteLine($"\tSearch time: {searchTaskParallelForSearchTime}");
+                Console.WriteLine($"\tSearch time (in ms): {searchTaskParallelForSearchTime}");
 
                 // Print TaskParallel ForEach Result
                 Console.WriteLine("\nTask parallel foreach search Results:");
                 Console.WriteLine($"\tResult count: {searchTaskParallelForEachResultCount}");
-                Console.WriteLine($"\tSearch time: {searchTaskParallelForEachSearchTime}\n");
+                Console.WriteLine($"\tSearch time (in ms): {searchTaskParallelForEachSearchTime}\n");
             } while (inputPattern != ":q");
         }
     }

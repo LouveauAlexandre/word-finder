@@ -22,7 +22,7 @@ fn generate_word_list() -> Vec<String> {
 fn is_correct_word(word : &str, pattern : &str) -> bool {
     let len = pattern.len();
     match word.get(..len) {
-        Some(sub_word) => sub_word==pattern,
+        Some(sub_word) => sub_word == pattern,
         _ => false,
     }
 }

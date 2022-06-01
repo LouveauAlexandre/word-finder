@@ -1,0 +1,26 @@
+﻿<Window x:Class="WordListParallelSearch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WordListParallelSearch" 
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    
+    <DockPanel Margin="10">
+        <DockPanel LastChildFill="True" Width="389">
+            <TextBox DockPanel.Dock="Top" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" KeyDown="OnKeyDownHandler" HorizontalAlignment="Stretch" />
+            <ListView ItemsSource="{Binding SourceCollection, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label>Search time (in milliseconds):</Label>
+                <Label Content="{Binding ElapseTime, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Number of matching words:</Label>
+                <Label Content="{Binding MatchingCount, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

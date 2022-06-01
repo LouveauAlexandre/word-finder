@@ -25,16 +25,9 @@ namespace c_sharp_word_finder
 
     internal class Words
     {
-        public List<string> WordList { get; private set; } = new List<string>();
-
-        public Words()
+        public static List<string> GenerateWordList()
         {
-            GenerateWordList();
-        }
-
-        private void GenerateWordList()
-        {
-            WordList = new List<string>();
+            List<string> wordList = new List<string>();
             for (char c1 = 'A'; c1 <= 'Z'; c1++)
             {
                 for (char c2 = 'A'; c2 <= 'Z'; c2++)
@@ -43,12 +36,13 @@ namespace c_sharp_word_finder
                     {
                         for (char c4 = 'A'; c4 <= 'Z'; c4++)
                         {
-                            WordList.Add("" + c1 + c2 + c3 + c4);
+                            wordList.Add("" + c1 + c2 + c3 + c4);
                         }
                     }
                 }
             }
-            WordList.Shuffle();
+            wordList.Shuffle();
+            return wordList;
         }
     }
 }

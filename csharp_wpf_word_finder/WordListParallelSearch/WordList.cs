@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace c_sharp_word_finder
+namespace WordListParallelSearch
 {
     public static class ShuffleExtension
     {
@@ -23,19 +23,14 @@ namespace c_sharp_word_finder
         }
     }
 
-    internal class Words
+    internal class WordList
     {
-        public List<string> WordList { get; private set; } = new List<string>();
+        public List<string> List { get; private set; }
 
-        public Words()
+        public WordList()
         {
-            GenerateWordList();
-        }
-
-        private void GenerateWordList()
-        {
-            WordList = new List<string>();
-            for (char c1 = 'A'; c1 <= 'Z'; c1++)
+            List = new List<string>();
+            Parallel.For('A', 'Z' + 1, c =>
             {
                 for (char c2 = 'A'; c2 <= 'Z'; c2++)
                 {
@@ -43,12 +38,15 @@ namespace c_sharp_word_finder
                     {
                         for (char c4 = 'A'; c4 <= 'Z'; c4++)
                         {
-                            WordList.Add("" + c1 + c2 + c3 + c4);
+                            lock(List)
+                            {
+                                List.Add("" + (char)c + c2 + c3 + c4);
+                            }
                         }
                     }
                 }
-            }
-            WordList.Shuffle();
+            });
+            List.Shuffle();
         }
     }
 }

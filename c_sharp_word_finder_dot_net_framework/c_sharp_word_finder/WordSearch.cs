@@ -72,7 +72,6 @@ namespace c_sharp_word_finder
 
             for (int i = chunckSize * maxThreads; i < wordList.Count; i++)
             {
-                //if (wordList[i].StartsWith(pattern))
                 if (StartsWith(wordList[i], pattern))
                 {
                     matchingWords.Add(wordList[i]);
