@@ -162,7 +162,7 @@ For the last one, as Task<T> can return a value, each Task create is own list of
 Measurements was made on an Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz 6Core 12 Threads.
 
 <div>
-<img src="./img/search_time_csharp.png" 
+<img src="./img/search_time_csharp.PNG" 
 alt="CSharp search time measurement" 
 title="CSharp search time measurement" />
 </div>
@@ -184,7 +184,7 @@ private bool StartsWith(string word, string pattern)
 With just this simple change, here's the new measurements: 
 
 <div>
-<img src="./img/search_time_csharp_opti.png" 
+<img src="./img/search_time_csharp_opti.PNG" 
 alt="CSharp search time measurement optimized"  
 title="CSharp search time measurement with custom StartWith" />
 </div>
@@ -312,7 +312,7 @@ vector<string> processSearchOpenMP(const vector<string>& wordList, const string&
 Measurements was made on an Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz 6Core 12 Threads.
 
 <div>
-<img src="./img/search_time_cpp.png" 
+<img src="./img/search_time_cpp.PNG" 
 alt="Cpp search time measurement" 
 title="Cpp search time measurement" />
 </div>
@@ -362,7 +362,7 @@ fn process_search_multi_threaded<'a>(word_list: &'a Vec<String>, pattern: &'a st
 ### Measurements of search time for each implementations
 
 <div>
-<img src="./img/search_time_rust.png" 
+<img src="./img/search_time_rust.PNG" 
 alt="Rust search time measurement" 
 title="Rust search time measurement" />
 </div>
